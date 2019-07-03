@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import classes from './SideDrawer.module.css';
@@ -25,6 +26,11 @@ const sideDrawer = (props) => {
             </div>
         </Aux>
     );
+}
+
+sideDrawer.propTypes = {
+    props: PropTypes.func,
+    closed: PropTypes.func
 }
 
 export default sideDrawer;
