@@ -6,16 +6,23 @@ const withErrorHandler = (WrappedComponent, axios)=>{
     return class extends Component{
         state = {
             error: null
+
         }
 
-        componentDidMount(){
-            axios.interceptors.request.use(req=>{ //czyszczenie bledow na start kolejnego requestu
+        constructor(){
+            super();
+            this.reqInterceptor = axios.interceptors.request.use(req=>{ //czyszczenie bledow na start kolejnego requestu
                 this.setState({error:null});
                 return req;
             });
-            axios.interceptors.response.use(response => response, error=>{
+            this.respInterceptor = axios.interceptors.response.use(response => response, error=>{
                 this.setState({error:error});
             });
+        }
+
+        componentWillUnmount(){
+            axios.interceptors.req.eject(this.reqInterceptor);
+            axios.interceptors.response.eject(this.respInterceptor);
         }
 
         errorWindowCloseHandler = () => {
