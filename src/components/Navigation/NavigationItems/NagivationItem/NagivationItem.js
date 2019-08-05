@@ -12,7 +12,12 @@ const navigationItem = (props) => {
 
                 {props.children}
             </a>*/}
-            <NavLink activeClassName='active' to={props.link}>{props.children}</NavLink>
+            <NavLink 
+                activeClassName={classes.active} 
+                exact
+                to={props.link}>
+                {props.children}
+            </NavLink>
         </li>
     );
 }
