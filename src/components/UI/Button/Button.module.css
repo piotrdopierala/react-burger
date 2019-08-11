@@ -19,6 +19,11 @@
     color: #5C9210;
 }
 
+.Button:disabled{
+    color: gray;
+    cursor: not-allowed;
+}
+
 .Danger {
     color: #944317;
 }
