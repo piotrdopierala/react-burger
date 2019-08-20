@@ -1,13 +1,13 @@
 import * as actions from '../actions';
 
 const initialState = {
-    ingredients: [],
+    ingredients: {},
     totalPrice: 0
 }
 
 const rootReducer = (state = initialState, action) => {
     let newState = {
-        ingredients: [...state.ingredients],
+        ingredients: {...state.ingredients},
         totalPrice: state.totalPrice
     };
 
