@@ -12,9 +12,6 @@ import * as actions from '../../store/actions';
 
 class BurgerBuilder extends Component {
     state = {
-        //ingredients: null,
-        //totalPrice: 4,
-        puchasable: false,
         purchasing: false,
         loading: false,
         error: false
@@ -40,15 +37,10 @@ class BurgerBuilder extends Component {
             const igCount = Object.keys(ingerients)
                 .map(igkey => ingerients[igkey])
                 .reduce((sum, elCount) => sum + elCount);
-            if ((igCount > 0) !== this.state.puchasable) {
-                this.setState({ puchasable: igCount > 0 })
-            }
+            return igCount > 0
         }
     };
 
-    componentDidUpdate() {
-        this.updatePurchaseState(this.props.ingredients);
-    }
 
     purchaseHandler = () => {
         this.setState({ purchasing: true });
@@ -91,10 +83,10 @@ class BurgerBuilder extends Component {
                 <Aux>
                     <Burger ingredients={this.props.ingredients} />
                     <BuildControls
-                        ingredientAdded={(type)=>this.props.onAddIngredient(type, 1)}
-                        ingredientRemoved={(type)=>this.props.onRemoveIngredient(type, 1)}
+                        ingredientAdded={(type) => this.props.onAddIngredient(type, 1)}
+                        ingredientRemoved={(type) => this.props.onRemoveIngredient(type, 1)}
                         disabled={disabledInfo}
-                        puchasable={this.state.puchasable}
+                        puchasable={this.updatePurchaseState(this.props.ingredients)}
                         price={this.props.totalPrice}
                         ordered={this.purchaseHandler}
                     />
