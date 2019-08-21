@@ -27,14 +27,14 @@ const rootReducer = (state = initialState, action) => {
                 return state;
             }
             newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] + action.amount;
-            newState.totalPrice = state.totalPrice + INGREDIENT_PRICES[action.ingredient];
+            newState.totalPrice = state.totalPrice + (INGREDIENT_PRICES[action.ingredient]*action.amount);
             return newState;
         case actions.SUB_INGREDIENT_AMOUNT:
             if (newState.ingredients[action.ingredient] === undefined || state.ingredients[action.ingredient] <= 0) {
                 return state;
             }
             newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] - action.amount;
-            newState.totalPrice = state.totalPrice - INGREDIENT_PRICES[action.ingredient];
+            newState.totalPrice = state.totalPrice - (INGREDIENT_PRICES[action.ingredient]*action.amount);
             return newState;
         default:
             return state;

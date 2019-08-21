@@ -50,7 +50,6 @@ class BurgerBuilder extends Component {
         this.updatePurchaseState(this.props.ingredients);
     }
 
-
     purchaseHandler = () => {
         this.setState({ purchasing: true });
     }
