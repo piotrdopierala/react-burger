@@ -46,39 +46,6 @@ class BurgerBuilder extends Component {
         }
     };
 
-    addIngredientHandler = (type) => {
-        //const oldCount = this.state.ingredients[type];
-        //const updatedCount = oldCount + 1;
-        //const updatedIngredients = { ...this.state.ingredients };
-        //updatedIngredients[type] = updatedCount;
-
-        // const priceAddition = INGREDIENT_PRICES[type];
-        // const oldPrice = this.state.totalPrice;
-        // const newPrice = oldPrice + priceAddition;
-
-        //this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-        this.props.onAddIngredient(type, 1);
-        //this.updatePurchaseState(this.props.ingerients);//nie jestem pewien czy od razu zaktualizuje ilosci ingr
-    }
-
-    removeIngredientHandler = (type) => {
-        // const oldCount = this.props.ingredients[type];
-        // if (oldCount === 0) {
-        //     return;
-        // }
-        // const updatedCount = oldCount - 1;
-        // const updatedIngredients = { ...this.state.ingredients };
-        // updatedIngredients[type] = updatedCount;
-
-        // const priceSubstraction = INGREDIENT_PRICES[type];
-        // const oldPrice = this.state.totalPrice;
-        // const newPrice = oldPrice - priceSubstraction;
-
-        //this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-        this.props.onRemoveIngredient(type, 1);
-        //this.updatePurchaseState(this.props.ingerients);
-    }
-
     componentDidUpdate() {
         this.updatePurchaseState(this.props.ingredients);
     }
@@ -125,8 +92,8 @@ class BurgerBuilder extends Component {
                 <Aux>
                     <Burger ingredients={this.props.ingredients} />
                     <BuildControls
-                        ingredientAdded={this.addIngredientHandler}
-                        ingredientRemoved={this.removeIngredientHandler}
+                        ingredientAdded={(type)=>this.props.onAddIngredient(type, 1)}
+                        ingredientRemoved={(type)=>this.props.onRemoveIngredient(type, 1)}
                         disabled={disabledInfo}
                         puchasable={this.state.puchasable}
                         price={this.props.totalPrice}
