@@ -2,7 +2,14 @@ import * as actions from '../actions';
 
 const initialState = {
     ingredients: {},
-    totalPrice: 0
+    totalPrice: 4
+}
+
+const INGREDIENT_PRICES = {
+    salad: 0.5,
+    bacon: 0.7,
+    cheese: 0.4,
+    meat: 1.3
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -20,12 +27,14 @@ const rootReducer = (state = initialState, action) => {
                 return state;
             }
             newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] + action.amount;
+            newState.totalPrice = state.totalPrice + INGREDIENT_PRICES[action.ingredient];
             return newState;
         case actions.SUB_INGREDIENT_AMOUNT:
-            if (newState.ingredients[action.ingredient] === undefined) {
+            if (newState.ingredients[action.ingredient] === undefined || state.ingredients[action.ingredient] <= 0) {
                 return state;
             }
             newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] - action.amount;
+            newState.totalPrice = state.totalPrice - INGREDIENT_PRICES[action.ingredient];
             return newState;
         default:
             return state;
