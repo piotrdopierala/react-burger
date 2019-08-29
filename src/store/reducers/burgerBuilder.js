@@ -25,6 +25,7 @@ const rootReducer = (state = initialState, action) => {
             newState.ingredients = action.ingredients;
             newState.error = false;
             newState.loading = false;
+            newState.totalPrice = 4;
             return newState;
         case actions.ADD_INGREDIENT_AMOUNT:
             if (newState.ingredients[action.ingredient] === undefined) {
