@@ -27,6 +27,16 @@ const orderReducer = (state = initialState, action) => {
         case actionTypes.PURCHASE_INIT:
             newState.purchased = false;
             return newState;
+        case actionTypes.FETCH_ORDERS_START:
+            newState.loading = true;
+            return newState;
+        case actionTypes.FETCH_ORDERS_SUCCESS:
+            newState.orders = action.orders;
+            newState.loading = false;
+            return newState;
+        case actionTypes.FETCH_ORDERS_FAILED:
+            newState.loading = false;            
+            return newState;
         default:
             return state;
     }
