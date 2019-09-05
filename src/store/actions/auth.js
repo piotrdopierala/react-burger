@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import * as actionTypes from './actionTypes';
 
 export const authStart = () => {
@@ -22,7 +24,18 @@ export const authFailed = (error) => {
 
 export const auth = (email, password)=> {
     return (dispatch) => {
-        // TODO user authentication
         dispatch(authStart());
+        const authData = {
+            "email" : email,
+            "pass" : password
+        }
+        axios.post('http://localhost:8080/burger/api/cust/login-process',authData)
+            .then((response)=>{
+                dispatch(authSuccess({token: response.data}));
+            })
+            .catch((error)=>{
+                console.log(error);
+                dispatch(authFailed());
+            });
     };
 };
