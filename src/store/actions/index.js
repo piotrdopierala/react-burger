@@ -10,5 +10,8 @@ export {
     fetchOrderStartAsync
 } from './order';
 export {
-    auth
+    auth,
 } from './auth';
+export {
+    signIn
+} from './signIn';

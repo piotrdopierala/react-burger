@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import classes from './SignIn.module.css';
+import {connect} from 'react-redux';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import classes from './Auth.module.css';
 import * as actions from '../../store/actions/index';
 
-class Auth extends Component {
+class SignIn extends Component {
 
     state = {
         controls: {
@@ -78,10 +78,10 @@ class Auth extends Component {
                 touched: true
             }
         };
-        this.setState({controls: updatedControls});
+        this.setState({ controls: updatedControls });
     }
 
-    submitHandler=(event) => {
+    submitHandler = (event) => {
         event.preventDefault();
         this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
     }
@@ -120,9 +120,8 @@ class Auth extends Component {
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuth: (email, password) => dispatch(actions.signIn(email, password))
     }
 }
 
-export default connect(null,mapDispatchToProps)(Auth);
-
+export default connect(null,mapDispatchToProps)(SignIn);

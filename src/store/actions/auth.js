@@ -31,7 +31,7 @@ export const auth = (email, password)=> {
         }
         axios.post('http://localhost:8080/burger/api/cust/login-process',authData)
             .then((response)=>{
-                dispatch(authSuccess({token: response.data}));
+                dispatch(authSuccess(response.data.auth));
             })
             .catch((error)=>{
                 console.log(error);
