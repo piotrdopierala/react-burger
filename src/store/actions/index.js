@@ -12,6 +12,3 @@ export {
 export {
     auth,
 } from './auth';
-export {
-    signIn
-} from './signIn';

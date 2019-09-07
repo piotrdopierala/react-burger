@@ -22,20 +22,24 @@ export const authFailed = (error) => {
     }
 }
 
-export const auth = (email, password)=> {
+export const auth = (email, password, isSignIn)=> {
     return (dispatch) => {
         dispatch(authStart());
         const authData = {
             "email" : email,
-            "pass" : password
+            "password" : password
         }
-        axios.post('http://localhost:8080/burger/api/cust/login-process',authData)
+        let url = 'http://localhost:8080/burger/api/cust/login-process'
+        if(isSignIn){
+            url = 'http://localhost:8080/burger/api/cust/sign-up'
+        }
+        axios.post(url,authData)
             .then((response)=>{
                 dispatch(authSuccess(response.data.auth));
             })
             .catch((error)=>{
                 console.log(error);
-                dispatch(authFailed());
+                dispatch(authFailed(error));
             });
     };
 };

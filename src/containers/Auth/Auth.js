@@ -39,7 +39,8 @@ class Auth extends Component {
                 valid: false,
                 touched: false
             }
-        }
+        },
+        isSignIn: false
     }
 
     checkValidation(value, rules) {
@@ -78,12 +79,20 @@ class Auth extends Component {
                 touched: true
             }
         };
-        this.setState({controls: updatedControls});
+        this.setState({ controls: updatedControls });
     }
 
-    submitHandler=(event) => {
+    submitHandler = (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignIn);
+    }
+
+    switchAuthModeHandler = () => {
+        this.setState(prevState=>{
+            return {
+                isSignIn: !prevState.isSignIn
+            };
+        })
     }
 
     render() {
@@ -109,20 +118,28 @@ class Auth extends Component {
 
         return (
             <div className={classes.Auth}>
+                <div style={{'padding': '10px'}}>
+                    {this.state.isSignIn? 'Sign in new user' : 'Log in'}
+                </div>
                 <form onSubmit={this.submitHandler}>
                     {form}
                     <Button btnType="Success">SUBMIT</Button>
                 </form>
+                <Button
+                    btnType="Danger"
+                    clicked={this.switchAuthModeHandler}>
+                    {this.state.isSignIn ? 'SWITCH TO LOG IN' : 'SWITCH TO SIGN IN'}
+                </Button>
             </div>
         );
     }
 }
 
-const mapDispatchToProps = (dispatch) =>{
-    return{
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAuth: (email, password, isSignIn) => dispatch(actions.auth(email, password, isSignIn))
     }
 }
 
-export default connect(null,mapDispatchToProps)(Auth);
+export default connect(null, mapDispatchToProps)(Auth);
 
