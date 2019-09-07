@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import thunk from 'redux-thunk';
+import authReducer from './store/reducers/auth';
 
 //todo: ability for user to choose ingredients position in burger
 //todo: fetch ingredients price from back-end. Check in back-end if ordered burger price is correct (no one has been tinkering with js variables to lower price).
@@ -17,7 +18,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
-    order: orderReducer
+    order: orderReducer,
+    auth: authReducer
 });
 
 const store = createStore(rootReducer,
