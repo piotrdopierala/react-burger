@@ -8,6 +8,11 @@
     box-sizing: border-box;
 }
 
+.error {
+    color: red;
+    margin-bottom: 0px;
+}
+
 @media (min-width: 600px){
     .Auth{
         width: 500px;
