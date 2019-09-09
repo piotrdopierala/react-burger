@@ -7,12 +7,16 @@ export const purchaseBurgerStart = () => {
     };
 }
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
     return (dispatch) => {
         dispatch(purchaseBurgerStart());
-        axios.post('saveorder', orderData)
+        let axiosConfig = {
+            headers: {
+                'Authorization': token
+            }
+        }
+        axios.post('saveorder', orderData,axiosConfig)
             .then(response => {
-                console.log('Purchase response data:', response.data);
                 dispatch(purchaseBurgerSuccess(response.data.OrderId, orderData));
             })
             .catch(error => {
@@ -42,14 +46,23 @@ export const purchaseInit = () => {
     };
 }
 
-export const fetchOrderStartAsync = () => {
+export const fetchOrderStartAsync = (token) => {
     return (dispatch) => {
         dispatch(fetchOrderStart());
-        axios.get('/getorders')
+        let axiosConfig = {
+            headers: {
+                'Authorization': token
+            }
+        }
+        axios.get('/getorders', axiosConfig)
             .then(res => {
-                dispatch(fetchOrderSuccess(res.data));
+                console.log('fetch order success.')
+                if (res) {
+                    dispatch(fetchOrderSuccess(res.data));
+                }
             })
             .catch(error => {
+                console.log('fetch order failed.')
                 dispatch(fetchOrderFailed(error));
             })
     }
