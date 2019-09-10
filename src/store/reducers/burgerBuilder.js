@@ -4,7 +4,8 @@ const initialState = {
     ingredients: null,
     totalPrice: 4,
     error: false,
-    loading: true
+    loading: true,
+    building: false
 }
 
 const INGREDIENT_PRICES = {
@@ -26,6 +27,7 @@ const rootReducer = (state = initialState, action) => {
             newState.error = false;
             newState.loading = false;
             newState.totalPrice = 4;
+            newState.building = false;
             return newState;
         case actions.ADD_INGREDIENT_AMOUNT:
             if (newState.ingredients[action.ingredient] === undefined) {
@@ -33,6 +35,7 @@ const rootReducer = (state = initialState, action) => {
             }
             newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] + action.amount;
             newState.totalPrice = state.totalPrice + (INGREDIENT_PRICES[action.ingredient] * action.amount);
+            newState.building = true;
             return newState;
         case actions.SUB_INGREDIENT_AMOUNT:
             if (newState.ingredients[action.ingredient] === undefined || state.ingredients[action.ingredient] <= 0) {
@@ -40,6 +43,7 @@ const rootReducer = (state = initialState, action) => {
             }
             newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] - action.amount;
             newState.totalPrice = state.totalPrice - (INGREDIENT_PRICES[action.ingredient] * action.amount);
+            newState.building = true;
             return newState;
         case actions.FETCH_INGREDIENTS_FAILED:
             newState.loading=false;

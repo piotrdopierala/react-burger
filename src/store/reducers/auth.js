@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     token: null,
     error: null,
-    loading: false
+    loading: false,
+    authRedirectPath: '/'
 }
 
 const authReducer = (state = initialState, action) => {
@@ -27,6 +28,9 @@ const authReducer = (state = initialState, action) => {
             return newState;
         case actionTypes.AUTH_LOGOUT:
             newState.token = null;
+            return newState;
+        case actionTypes.SET_AUTH_REDIRECT_PATH:
+            newState.authRedirectPath = action.path;
             return newState;
         default:
             return state;
