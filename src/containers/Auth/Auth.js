@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
@@ -123,11 +124,17 @@ class Auth extends Component {
 
         let errorMessage = null;
         if (this.props.error) {
-            errorMessage = (<div style={{margin: '10px'}}><p className={classes.error}>{this.props.error}</p>Try again.</div>);
+            errorMessage = (<div style={{ margin: '10px' }}><p className={classes.error}>{this.props.error}</p>Try again.</div>);
         }
 
-        return (
-            <div className={classes.Auth}>
+        let authRedirect = null;
+        if (this.state.isSignIn && this.props.isAuthenticated) {
+            authRedirect = <Redirect to="/" />;
+        }
+
+        return (            
+            < div className = { classes.Auth } >
+                { authRedirect }
                 <div style={{ 'padding': '10px' }}>
                     {this.state.isSignIn ? 'Sign in new user' : 'Log in'}
                 </div>
@@ -141,7 +148,7 @@ class Auth extends Component {
                     clicked={this.switchAuthModeHandler}>
                     {this.state.isSignIn ? 'SWITCH TO LOG IN' : 'SWITCH TO SIGN IN'}
                 </Button>
-            </div>
+            </div >
         );
     }
 }
@@ -149,7 +156,8 @@ class Auth extends Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        isAuthenticated: state.auty.token !== null
     };
 };
 
