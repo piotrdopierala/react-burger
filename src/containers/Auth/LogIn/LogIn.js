@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import Input from '../../components/UI/Input/Input';
-import Button from '../../components/UI/Button/Button';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import classes from './Auth.module.css';
-import * as actions from '../../store/actions/index';
+import Input from '../../../components/UI/Input/Input';
+import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import classes from './LogIn.module.css';
+import * as actions from '../../../store/actions/index';
 
 class Auth extends Component {
 
@@ -41,8 +41,7 @@ class Auth extends Component {
                 valid: false,
                 touched: false
             }
-        },
-        isSignIn: false
+        }
     }
 
     componentDidMount(){
@@ -95,12 +94,8 @@ class Auth extends Component {
         this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignIn);
     }
 
-    switchAuthModeHandler = () => {
-        this.setState(prevState => {
-            return {
-                isSignIn: !prevState.isSignIn
-            };
-        })
+    switchToSignInHandler = () => {
+        this.props.history.push('/signin');
     }
 
     render() {
@@ -142,7 +137,7 @@ class Auth extends Component {
             < div className = { classes.Auth } >
                 { authRedirect }
                 <div style={{ 'padding': '10px' }}>
-                    {this.state.isSignIn ? 'Sign in new user' : 'Log in'}
+                    Log in
                 </div>
                 <form onSubmit={this.submitHandler}>
                     {errorMessage}
@@ -151,8 +146,8 @@ class Auth extends Component {
                 </form>
                 <Button
                     btnType="Danger"
-                    clicked={this.switchAuthModeHandler}>
-                    {this.state.isSignIn ? 'SWITCH TO LOG IN' : 'SWITCH TO SIGN IN'}
+                    clicked={this.switchToSignInHandler}>
+                    SWITCH TO SIGN IN
                 </Button>
             </div >
         );
