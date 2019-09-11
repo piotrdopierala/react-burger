@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import classes from './SignIn.module.css';
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
+import * as actions from '../../../store/actions/index';
 
 class SignIn extends Component {
 
@@ -94,8 +96,58 @@ class SignIn extends Component {
         }
     }
 
+    checkValidation(value, rules) {
+        if (!rules) {
+            return true;
+        }
+        if (rules.required) {
+            if (value.trim() === '')
+                return false;
+        }
+        if (rules.minLength) {
+            if (value.trim().length < rules.minLength)
+                return false;
+        }
+        if (rules.maxLength) {
+            if (value.trim().length > rules.maxLength)
+                return false;
+        }
+        if (rules.contains) {
+            for (let searchedChars of rules.contains) {
+                if (!value.includes(searchedChars)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    inputChangedHandler = (event, controlName) => {
+        const updatedControls = {
+            ...this.state.controls,
+            [controlName]: {
+                ...this.state.controls[controlName],
+                value: event.target.value,
+                valid: this.checkValidation(event.target.value, this.state.controls[controlName].validation),
+                touched: true
+            }
+        };
+        this.setState({ controls: updatedControls });
+    }
+
     switchToLogInHandler = () => {
         this.props.history.push('/login');
+    }
+
+    submitHandler = (event) => {
+        event.preventDefault();
+        let formData = {};
+        for (let key in this.state.controls){
+            console.log(key);
+            formData[key] = this.state.controls[key].value
+        };
+        console.log(formData);
+        this.props.onSignIn(formData);
     }
 
     render() {
@@ -135,4 +187,11 @@ class SignIn extends Component {
         );
     };
 }
-export default SignIn;
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSignIn: (formData)=> dispatch(actions.logIn(formData))
+    }
+}
+
+export default connect(null,mapDispatchToProps)(SignIn);

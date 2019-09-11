@@ -8,8 +8,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import classes from './LogIn.module.css';
 import * as actions from '../../../store/actions/index';
 
-class Auth extends Component {
-
+class LogIn extends Component {
     state = {
         controls: {
             email: {
@@ -156,20 +155,20 @@ class Auth extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.auth.loading,
-        error: state.auth.error,
-        isAuthenticated: state.auth.token !== null,
+        loading: state.logIn.loading,
+        error: state.logIn.error,
+        isAuthenticated: state.logIn.token !== null,
         building: state.burgerBuilder.building,
-        authRedirectPath: state.auth.authRedirectPath
+        authRedirectPath: state.logIn.authRedirectPath
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAuth: (email, password, isSignIn) => dispatch(actions.auth(email, password, isSignIn)),
-        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+        onAuth: (email, password, isSignIn) => dispatch(actions.logIn(email, password, isSignIn)),
+        onSetAuthRedirectPath: () => dispatch(actions.setLogInRedirectPath('/'))
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
 

@@ -2,22 +2,22 @@ import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
 
-export const authStart = () => {
+export const logInStart = () => {
     return {
-        type: actionTypes.AUTH_START
+        type: actionTypes.LOGIN_START
     };
 };
 
-export const authSuccess = (authData) => {
+export const logInSuccess = (authData) => {
     return {
-        type: actionTypes.AUTH_SUCCESS,
+        type: actionTypes.LOGIN_SUCCESS,
         authData: authData
     };
 };
 
-export const authFailed = (error) => {
+export const logInFailed = (error) => {
     return {
-        type: actionTypes.AUTH_FAIL,
+        type: actionTypes.LOGIN_FAIL,
         error: error
     }
 }
@@ -27,11 +27,11 @@ export const logout = () => {
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('userEmail');
     return {
-        type: actionTypes.AUTH_LOGOUT
+        type: actionTypes.LOGIN_LOGOUT
     }
 }
 
-export const checkAuthTimeout = (expirationTime) => {
+export const checkLogInTimeout = (expirationTime) => {
     return (dispatch) => {
         setTimeout(() => {
             dispatch(logout());
@@ -39,40 +39,37 @@ export const checkAuthTimeout = (expirationTime) => {
     }
 }
 
-export const auth = (email, password, isSignIn) => {
+export const logIn = (email, password, isSignIn) => {
     return (dispatch) => {
-        dispatch(authStart());
+        dispatch(logInStart());
         const authData = {
             "email": email,
             "password": password
         }
         let url = 'http://localhost:8080/burger/api/cust/login-process'
-        if (isSignIn) {
-            url = 'http://localhost:8080/burger/api/cust/sign-up'
-        }
         axios.post(url, authData)
             .then((response) => {
                 localStorage.setItem('token', response.data.auth.token);
                 let expirationDate = new Date(new Date().getTime() + Number(response.data.auth.expiresIn));
                 localStorage.setItem('expirationDate', expirationDate);
                 localStorage.setItem('userEmail', response.data.auth.email);
-                dispatch(authSuccess(response.data.auth));
-                dispatch(checkAuthTimeout(response.data.auth.expiresIn));
+                dispatch(logInSuccess(response.data.auth));
+                dispatch(checkLogInTimeout(response.data.auth.expiresIn));
             })
             .catch((error) => {
-                dispatch(authFailed(error.message));
+                dispatch(logInFailed(error.message));
             });
     };
 };
 
-export const setAuthRedirectPath = (path) => {
+export const setLogInRedirectPath = (path) => {
     return {
-        type: actionTypes.SET_AUTH_REDIRECT_PATH,
+        type: actionTypes.SET_LOGIN_REDIRECT_PATH,
         path: path
     }
 }
 
-export const authCheckState = () => {
+export const logInCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -81,8 +78,8 @@ export const authCheckState = () => {
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
             if (expirationDate > new Date()) {
                 //const userEmail = localStorage.getItem('userEmail');
-                dispatch(authSuccess({ 'token': token}));                
-                dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()));
+                dispatch(logInSuccess({ 'token': token}));                
+                dispatch(checkLogInTimeout(expirationDate.getTime() - new Date().getTime()));
             }else{
                 dispatch(logout());
             }

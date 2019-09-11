@@ -10,8 +10,11 @@ export {
     fetchOrderStartAsync
 } from './order';
 export {
-    auth,
+    logIn,
     logout,
-    setAuthRedirectPath,
-    authCheckState
-} from './auth';
+    setLogInRedirectPath,
+    logInCheckState
+} from './LogIn';
+export{
+    signIn
+} from './SignIn';

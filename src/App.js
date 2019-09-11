@@ -21,13 +21,14 @@ class App extends Component {
         <Route path='/login' component={LogIn} />
         <Route path='/signin' component={SignIn} />
         <Route path='/' component={BurgerBuilder} />
-        <Redirect to='/'/>
+        <Redirect to='/' />
       </Switch>
     );
 
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
+          <Route path='/login' component={LogIn} />
           <Route path='/signin' component={SignIn} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/orders' component={Orders} />
@@ -47,13 +48,13 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.logIn.token !== null
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTryAutoSingup: () => dispatch(actions.authCheckState())
+    onTryAutoSingup: () => dispatch(actions.logInCheckState())
   };
 };
 
