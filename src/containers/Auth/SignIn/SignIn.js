@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import classes from './SignIn.module.css';
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 import * as actions from '../../../store/actions/index';
 
 class SignIn extends Component {
@@ -142,7 +143,7 @@ class SignIn extends Component {
     submitHandler = (event) => {
         event.preventDefault();
         let formData = {};
-        for (let key in this.state.controls){
+        for (let key in this.state.controls) {
             console.log(key);
             formData[key] = this.state.controls[key].value
         };
@@ -169,12 +170,20 @@ class SignIn extends Component {
                 shouldValidate={formElement.config.validation}
                 touched={formElement.config.touched} />
         ));
-        return (            
-            < div className = { classes.Auth } >
+        if (this.props.loading) {
+            form = <Spinner />
+        }
+        let errorMessage = null;
+        if (this.props.error) {
+            errorMessage = (<div style={{ margin: '10px' }}><p className={classes.error}>{this.props.error}</p>Try again.</div>);
+        }
+        return (
+            < div className={classes.Auth} >
                 <div style={{ 'padding': '10px' }}>
                     Sign in new user
                 </div>
                 <form onSubmit={this.submitHandler}>
+                    {errorMessage}
                     {form}
                     <Button btnType="Success">SUBMIT</Button>
                 </form>
@@ -188,10 +197,17 @@ class SignIn extends Component {
     };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
     return {
-        onSignIn: (formData)=> dispatch(actions.logIn(formData))
+        error: state.signIn.error,
+        loading: state.signIn.loading
     }
 }
 
-export default connect(null,mapDispatchToProps)(SignIn);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSignIn: (formData) => dispatch(actions.signIn(formData))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
