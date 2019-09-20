@@ -7,6 +7,7 @@ import Input from '../../../components/UI/Input/Input';
 import { connect } from 'react-redux';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actionCreators from '../../../store/actions/index';
+import checkValidation from '../../../shared/validation';
 
 class contactData extends Component {
     state = {
@@ -112,32 +113,6 @@ class contactData extends Component {
         this.props.onPurchaseBurgerStart(order,this.props.token);
     }
 
-    checkValidation(value, rules) {
-        if(!rules){
-            return true;
-        }
-        if (rules.required) {
-            if (value.trim() === '')
-                return false;
-        }
-        if (rules.minLength) {
-            if (value.trim().length < rules.minLength)
-                return false;
-        }
-        if (rules.maxLength) {
-            if (value.trim().length > rules.maxLength)
-                return false;
-        }
-        if (rules.contains) {
-            for (let searchedChars of rules.contains) {
-                if (!value.includes(searchedChars)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedOrderForm = {
             ...this.state.orderForm
@@ -146,7 +121,7 @@ class contactData extends Component {
             ...updatedOrderForm[inputIdentifier]
         }
         updatedFromElement.value = event.target.value;
-        updatedFromElement.valid = this.checkValidation(updatedFromElement.value, updatedFromElement.validation);
+        updatedFromElement.valid = checkValidation(updatedFromElement.value, updatedFromElement.validation);
         updatedFromElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFromElement;
         let allFormElementsIsValid = true;

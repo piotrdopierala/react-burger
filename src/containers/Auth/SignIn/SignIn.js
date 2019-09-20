@@ -6,6 +6,7 @@ import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import * as actions from '../../../store/actions/index';
+import checkValidation from '../../../shared/validation';
 
 class SignIn extends Component {
 
@@ -97,39 +98,13 @@ class SignIn extends Component {
         }
     }
 
-    checkValidation(value, rules) {
-        if (!rules) {
-            return true;
-        }
-        if (rules.required) {
-            if (value.trim() === '')
-                return false;
-        }
-        if (rules.minLength) {
-            if (value.trim().length < rules.minLength)
-                return false;
-        }
-        if (rules.maxLength) {
-            if (value.trim().length > rules.maxLength)
-                return false;
-        }
-        if (rules.contains) {
-            for (let searchedChars of rules.contains) {
-                if (!value.includes(searchedChars)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     inputChangedHandler = (event, controlName) => {
         const updatedControls = {
             ...this.state.controls,
             [controlName]: {
                 ...this.state.controls[controlName],
                 value: event.target.value,
-                valid: this.checkValidation(event.target.value, this.state.controls[controlName].validation),
+                valid: checkValidation(event.target.value, this.state.controls[controlName].validation),
                 touched: true
             }
         };
