@@ -54,15 +54,13 @@ export const fetchOrderStartAsync = (token) => {
                 'Authorization': token
             }
         }
-        axios.get('/getorders', axiosConfig)
+        axios.get('/getorders/user', axiosConfig)
             .then(res => {
-                console.log('fetch order success.')
                 if (res) {
                     dispatch(fetchOrderSuccess(res.data));
                 }
             })
             .catch(error => {
-                console.log('fetch order failed.')
                 dispatch(fetchOrderFailed(error));
             })
     }
