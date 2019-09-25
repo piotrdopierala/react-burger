@@ -17,10 +17,11 @@ export const subIngredient = (ing, amt) => {
     }
 };
 
-const setIngredients = (ings) => {
+const setIngredients = (ings,priceList) => {
     return {
         type: actionTypes.SET_INGREDIENTS,
-        ingredients: ings
+        ingredients: ings,
+        priceList: priceList
     }
 }
 
@@ -35,11 +36,13 @@ export const initIngredients = () => {
         axios.get("http://localhost:8080/burger/api/ingredient/getAll").then(
             (response) => {
                 let ingredientList = {};
+                let priceList = {};
                 response.data.forEach(el => {
-                    ingredientList[el["name"]] = 0
+                    ingredientList[el["name"]] = 0;
+                    priceList[el["name"]] = el["price"];
                 })
                 //this.props.onSetIngredients(ingredientList);
-                dispatch(setIngredients(ingredientList));
+                dispatch(setIngredients(ingredientList,priceList));
             }
         ).catch((error) => {
             dispatch(fetchIngredientsFailed());

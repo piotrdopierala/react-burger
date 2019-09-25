@@ -8,11 +8,11 @@ const initialState = {
     building: false
 }
 
-const INGREDIENT_PRICES = {
-    salad: 0.5,
-    bacon: 0.7,
-    cheese: 0.4,
-    meat: 1.3
+let ingredientPrices = {
+    salad: 0.0,
+    bacon: 0.0,
+    cheese: 0.0,
+    meat: 0.0
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -22,8 +22,10 @@ const rootReducer = (state = initialState, action) => {
     };
 
     switch (action.type) {
-        case actions.SET_INGREDIENTS:
+        case actions.SET_INGREDIENTS:            
             newState.ingredients = action.ingredients;
+            ingredientPrices = action.priceList;            
+            console.log(ingredientPrices);
             newState.error = false;
             newState.loading = false;
             newState.totalPrice = 4;
@@ -34,7 +36,7 @@ const rootReducer = (state = initialState, action) => {
                 return state;
             }
             newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] + action.amount;
-            newState.totalPrice = state.totalPrice + (INGREDIENT_PRICES[action.ingredient] * action.amount);
+            newState.totalPrice = state.totalPrice + (ingredientPrices[action.ingredient] * action.amount);
             newState.building = true;
             return newState;
         case actions.SUB_INGREDIENT_AMOUNT:
@@ -42,7 +44,7 @@ const rootReducer = (state = initialState, action) => {
                 return state;
             }
             newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] - action.amount;
-            newState.totalPrice = state.totalPrice - (INGREDIENT_PRICES[action.ingredient] * action.amount);
+            newState.totalPrice = state.totalPrice - (ingredientPrices[action.ingredient] * action.amount);
             newState.building = true;
             return newState;
         case actions.FETCH_INGREDIENTS_FAILED:
