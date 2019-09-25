@@ -17,11 +17,12 @@ export const subIngredient = (ing, amt) => {
     }
 };
 
-const setIngredients = (ings,priceList) => {
+const setIngredients = (ings, priceList, startPrice) => {
     return {
         type: actionTypes.SET_INGREDIENTS,
         ingredients: ings,
-        priceList: priceList
+        priceList: priceList,
+        startPrice: startPrice
     }
 }
 
@@ -37,12 +38,19 @@ export const initIngredients = () => {
             (response) => {
                 let ingredientList = {};
                 let priceList = {};
+                let startPrice = NaN;
                 response.data.forEach(el => {
-                    ingredientList[el["name"]] = 0;
-                    priceList[el["name"]] = el["price"];
+                    if (el["name"] !== "start-price") {
+                        ingredientList[el["name"]] = 0;
+                        priceList[el["name"]] = el["price"];
+                    }else{
+                        startPrice = el.price;
+                    }
                 })
+
+
                 //this.props.onSetIngredients(ingredientList);
-                dispatch(setIngredients(ingredientList,priceList));
+                dispatch(setIngredients(ingredientList, priceList, startPrice));
             }
         ).catch((error) => {
             dispatch(fetchIngredientsFailed());
