@@ -14,13 +14,14 @@ class Orders extends Component {
     render() {
         let orderedBurgersJSX = [];
         if (!this.props.loading) {
+            console.log(this.props);
             orderedBurgersJSX = this.props.orders.map(order => {
                 return order.orderedBurgers.map(burger => {
                     return (
                         <Order
                             key={burger.id}
                             burger={burger}
-                            price={order.price}
+                            price={order.deliveryData.price}
                         />
                     );
                 });
