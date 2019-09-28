@@ -109,7 +109,7 @@ const mapDispatchToProps = (dispatch) => {
         onInitIngredients: () => dispatch(storeActions.initIngredients()),
         onAddIngredient: (ingr, amnt) => dispatch(storeActions.addIngredient(ingr, amnt)),
         onRemoveIngredient: (ingr, amnt) => dispatch(storeActions.subIngredient(ingr, amnt)),
-        onInitPurchase: () => dispatch(storeActions.purchaseInit),
+        onInitPurchase: () => dispatch(storeActions.purchaseInit()),
         onSetAuthRedirectPath: (path) => dispatch(storeActions.setLogInRedirectPath(path))
     };
 }

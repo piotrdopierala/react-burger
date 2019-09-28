@@ -13,10 +13,10 @@ import logInReducer from './store/reducers/logIn';
 import signInReducer from './store/reducers/signIn';
 
 //todo: ability for user to choose ingredients position in burger
-//todo: fetch ingredients price from back-end. Check in back-end if ordered burger price is correct (no one has been tinkering with js variables to lower price).
+//todo: Check in back-end if ordered burger price is correct (no one has been tinkering with js variables to lower price).
 
 
-const composeEnhancers = process.env.NODE_ENV == 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
