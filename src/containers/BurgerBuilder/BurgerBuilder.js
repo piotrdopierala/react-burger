@@ -63,8 +63,8 @@ class BurgerBuilder extends Component {
                 <Aux>
                     <Burger ingredients={this.props.ingredients} />
                     <BuildControls
-                        ingredientAdded={(type) => this.props.onAddIngredient(type, 1)}
-                        ingredientRemoved={(type) => this.props.onRemoveIngredient(type, 1)}
+                        ingredientAdded={(type) => this.props.onAddIngredient(type, 0)}
+                        ingredientRemoved={(type) => this.props.onRemoveIngredient(type, 0)}
                         disabled={disabledInfo}
                         puchasable={this.updatePurchaseState(this.props.ingredients)}
                         price={this.props.totalPrice}
@@ -107,8 +107,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onInitIngredients: () => dispatch(storeActions.initIngredients()),
-        onAddIngredient: (ingr, amnt) => dispatch(storeActions.addIngredient(ingr, amnt)),
-        onRemoveIngredient: (ingr, amnt) => dispatch(storeActions.subIngredient(ingr, amnt)),
+        onAddIngredient: (ingr, pos) => dispatch(storeActions.addIngredient(ingr, pos)),
+        onRemoveIngredient: (ingr, pos) => dispatch(storeActions.subIngredient(ingr, pos)),
         onInitPurchase: () => dispatch(storeActions.purchaseInit()),
         onSetAuthRedirectPath: (path) => dispatch(storeActions.setLogInRedirectPath(path))
     };

@@ -1,19 +1,19 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
 
-export const addIngredient = (ing, amt) => {
+export const addIngredient = (ing, pos) => {
     return {
-        type: actionTypes.ADD_INGREDIENT_AMOUNT,
+        type: actionTypes.ADD_INGREDIENT_POSITION,
         ingredient: ing,
-        amount: amt
+        position: pos
     }
 };
 
-export const subIngredient = (ing, amt) => {
+export const subIngredient = (ing, pos) => {
     return {
-        type: actionTypes.SUB_INGREDIENT_AMOUNT,
+        type: actionTypes.SUB_INGREDIENT_POSITION,
         ingredient: ing,
-        amount: amt
+        position: pos
     }
 };
 
@@ -47,7 +47,6 @@ export const initIngredients = () => {
                         startPrice = el.price;
                     }
                 })
-
 
                 //this.props.onSetIngredients(ingredientList);
                 dispatch(setIngredients(ingredientList, priceList, startPrice));
