@@ -33,20 +33,20 @@ const rootReducer = (state = initialState, action) => {
             newState.building = false;
             return newState;
         case actions.ADD_INGREDIENT_POSITION:
-            if (newState.ingredients[action.ingredient] === undefined) {
+            if (newState.ingredientsList[action.ingredient] === undefined) {
                 return state;
             }
-            if (action.position) {
+            if (action.position>= 0 && action.position<=(newState.ingredientsInBurger+1)) {
                 newState.ingredientsInBurger.splice(action.position, 0, action.ingredient);
             } else {
                 newState.ingredientsInBurger.unshift(action.ingredient)
             };
-            //newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] + action.amount;
+            newState.ingredientsList[action.ingredient] = newState.ingredientsList[action.ingredient] + 1;
             newState.totalPrice = state.totalPrice + ingredientPrices[action.ingredient];
             newState.building = true;
             return newState;
         case actions.SUB_INGREDIENT_POSITION:
-            if (newState.ingredients[action.ingredient] === undefined || state.ingredientsList[action.ingredient] <= 0) {
+            if (newState.ingredientsList[action.ingredient] === undefined || newState.ingredientsList[action.ingredient] === 0) {
                 return state;
             }
             if (action.position>=0 && action.position<newState.ingredientsInBurger.length) {
@@ -57,7 +57,7 @@ const rootReducer = (state = initialState, action) => {
                     newState.ingredientsInBurger.splice(idxToRemove, 1);
                 }
             }
-            //newState.ingredients[action.ingredient] = newState.ingredients[action.ingredient] - action.amount;
+            newState.ingredientsList[action.ingredient] = newState.ingredientsList[action.ingredient] - 1;
             newState.totalPrice = state.totalPrice - ingredientPrices[action.ingredient];
             newState.building = true;
             return newState;
