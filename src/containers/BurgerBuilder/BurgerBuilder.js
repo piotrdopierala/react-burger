@@ -43,7 +43,7 @@ class BurgerBuilder extends Component {
 
     render() {
         const disabledInfo = {
-            ...this.props.ingredients
+            ...this.props.ingredientsList
         };
         for (let key in disabledInfo) {
             disabledInfo[key] = (disabledInfo[key] <= 0); //true jesli ilosc skladnika <= 0
