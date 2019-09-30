@@ -26,6 +26,7 @@ const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.SET_INGREDIENTS:
             newState.ingredientsList = action.ingredients;
+            newState.ingredientsInBurger = [];
             ingredientPrices = action.priceList;
             newState.error = false;
             newState.loading = false;

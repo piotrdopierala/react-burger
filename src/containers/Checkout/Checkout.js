@@ -5,7 +5,6 @@ import ContactData from './ContactData/ContactData';
 import { connect } from 'react-redux';
 
 class Checkout extends Component {
-
     cancelHandler = () => {
         this.props.history.goBack();
     }
@@ -37,7 +36,7 @@ class Checkout extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        ingredients: state.burgerBuilder.ingredients,
+        ingredients: state.burgerBuilder.ingredientsInBurger,
         purchased: state.order.purchased
     }
 }
