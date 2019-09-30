@@ -2,11 +2,11 @@ import React from 'react';
 import classes from './Order.module.css';
 
 const order = (props) => {
-    const ingredients = Object.keys(props.burger.ingredients).map(key=>{
-        return  {name: key , amount: props.burger.ingredients[key]};
+    const ingredients = props.burger.ingredients.map((ingr,i)=>{
+        return  ingr.name;
     });
    
-    const ingredientOutput = ingredients.map(ingr=>{
+    const ingredientOutput = ingredients.reverse().map((ingr,i)=>{
         return <span 
             style={{
                 textTransform: 'capitalize', 
@@ -15,7 +15,7 @@ const order = (props) => {
                 border: '1px solid #ccc',
                 padding: '5px'
             }}
-            key={ingr.name}>{ingr.name} ({ingr.amount})</span>
+            key={i}>{ingr}</span>
     })
     
     return (

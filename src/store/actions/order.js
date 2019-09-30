@@ -56,7 +56,8 @@ export const fetchOrderStartAsync = (token) => {
         }
         axios.get('/getorders/user', axiosConfig)
             .then(res => {
-                if (res) {
+                console.log(res);
+                if (res.data) {
                     dispatch(fetchOrderSuccess(res.data));
                 }
             })
@@ -73,6 +74,7 @@ export const fetchOrderStart = () => {
 }
 
 export const fetchOrderSuccess = (data) => {
+    console.log(data);
     return {
         type: actionTypes.FETCH_ORDERS_SUCCESS,
         orders: data

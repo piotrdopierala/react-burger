@@ -4,7 +4,7 @@ import axios from '../../axios-orders';
 import Order from '../../components/Order/Order';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 class Orders extends Component {
     componentDidMount() {
@@ -14,7 +14,6 @@ class Orders extends Component {
     render() {
         let orderedBurgersJSX = [];
         if (!this.props.loading) {
-            console.log(this.props);
             orderedBurgersJSX = this.props.orders.map(order => {
                 return order.orderedBurgers.map(burger => {
                     return (
@@ -41,16 +40,16 @@ class Orders extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onFetchOrders: (token)=>{dispatch(actions.fetchOrderStartAsync(token))}
+        onFetchOrders: (token) => { dispatch(actions.fetchOrderStartAsync(token)) }
     }
 }
 
 const mapStateToProps = (state) => {
-    return{
+    return {
         orders: state.order.orders,
         loading: state.order.loading,
         token: state.logIn.token
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(Orders, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
